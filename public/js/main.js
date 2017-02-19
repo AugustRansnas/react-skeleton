@@ -203,7 +203,7 @@ module.exports = camelizeStyleName;
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 var isTextNode = require('./isTextNode');
@@ -458,7 +458,7 @@ module.exports = createNodesFromMarkup;
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 function makeEmptyFunction(arg) {
@@ -1023,7 +1023,7 @@ module.exports = mapObject;
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  * @typechecks static-only
  */
 
@@ -1111,7 +1111,7 @@ module.exports = performanceNow;
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @typechecks
- * 
+ *
  */
 
 /*eslint-disable no-self-compare */
@@ -19669,18 +19669,20 @@ module.exports = require('./lib/React');
 var React = require('react');
 var ListItem = require('./ListItem.jsx');
 
+var ingredients = [{ "id": 1, "text": "ham" }, { "id": 2, "text": "cheese" }, { "id": 3, "text": "potatoes" }];
+
 var List = React.createClass({
   displayName: 'List',
 
   render: function () {
-    var createItem = function (text, index) {
-      return React.createElement(ListItem, { key: index + text, text: text });
-    };
+    var listItems = ingredients.map(function (item) {
+      return React.createElement(ListItem, { key: item.id, ingredient: item.text });
+    });
 
     return React.createElement(
       'ul',
       null,
-      this.props.items.map(createItem)
+      listItems
     );
   }
 });
@@ -19689,7 +19691,6 @@ module.exports = List;
 
 },{"./ListItem.jsx":169,"react":167}],169:[function(require,module,exports){
 var React = require('react');
-
 var ListItem = React.createClass({
   displayName: 'ListItem',
 
@@ -19700,7 +19701,7 @@ var ListItem = React.createClass({
       React.createElement(
         'h4',
         null,
-        this.props.text
+        this.props.ingredient
       )
     );
   }
@@ -19710,90 +19711,9 @@ module.exports = ListItem;
 
 },{"react":167}],170:[function(require,module,exports){
 var React = require('react');
-var List = require('./List.jsx');
-
-var ListManager = React.createClass({
-  displayName: 'ListManager',
-
-  getInitialState: function () {
-    return { items: [], newItemText: '' };
-  },
-  onChange: function (e) {
-    this.setState({ newItemText: e.target.value });
-  },
-  handleSubmit: function (e) {
-    e.preventDefault();
-
-    var currentItems = this.state.items;
-
-    currentItems.push(this.state.newItemText);
-
-    this.setState({ items: currentItems, newItemText: '' });
-  },
-  render: function () {
-
-    var divStyle = {
-      marginTop: 10
-    };
-
-    var headingStyle = {};
-
-    if (this.props.headingColor) {
-      headingStyle.background = this.props.headingColor;
-    }
-
-    return React.createElement(
-      'div',
-      { style: divStyle, className: 'col-sm-4' },
-      React.createElement(
-        'div',
-        { className: 'panel panel-primary' },
-        React.createElement(
-          'div',
-          { style: headingStyle, className: 'panel-heading' },
-          React.createElement(
-            'h3',
-            null,
-            this.props.title
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'row panel-body' },
-          React.createElement(
-            'form',
-            { onSubmit: this.handleSubmit },
-            React.createElement(
-              'div',
-              { className: 'col-sm-9' },
-              React.createElement('input', { className: 'form-control', onChange: this.onChange, value: this.state.newItemText })
-            ),
-            React.createElement(
-              'div',
-              { className: 'col-sm-2' },
-              React.createElement(
-                'button',
-                { className: 'btn btn-primary' },
-                'Add'
-              )
-            )
-          )
-        ),
-        React.createElement(List, { items: this.state.items })
-      )
-    );
-  }
-});
-
-module.exports = ListManager;
-
-},{"./List.jsx":168,"react":167}],171:[function(require,module,exports){
-var React = require('react');
 var ReactDOM = require('react-dom');
-var ListManager = require('./components/ListManager.jsx');
+var List = require('./components/List.jsx');
 
-ReactDOM.render(React.createElement(ListManager, { title: 'Ingredients' }), document.getElementById('ingredients'));
-ReactDOM.render(React.createElement(ListManager, { title: 'ToDo' }), document.getElementById('todo'));
-ReactDOM.render(React.createElement(ListManager, { title: 'Christmas', headingColor: '#b31217' }), document.getElementById('christmas'));
+ReactDOM.render(React.createElement(List, null), document.getElementById('ingredients'));
 
-},{"./components/ListManager.jsx":170,"react":167,"react-dom":29}]},{},[171]);
+},{"./components/List.jsx":168,"react":167,"react-dom":29}]},{},[170]);
